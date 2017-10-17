@@ -1,0 +1,15 @@
+#!/bin/sh
+MANNG_CHANNEL="${MANNG_CHANNEL:-#joetest}"
+MANNG_SERVER="${MANNG_SERVER:-irc.oftc.net}"
+MANNG_GURU="${MANNG_GURU:-lafrenierejm}"
+MANNG_USER="${MANNG_USER:-watrtehflagz}"
+MANNG_QUESTION="${MANNG_GURU}: What are the flags for Void Linux $1?"
+
+exec 3>/dev/tcp/${MANNG_SERVER}/6667
+echo "NICK ${MANNG_USER}" >&3
+echo "USER ${MANNG_USER} 8 * : ${MANNG_USER}" >&3
+echo "JOIN ${MANNG_CHANNEL}" >&3
+echo "PRIVMSG ${MANNG_CHANNEL} :${MANNG_QUESTION}" >&3
+echo "QUIT" >&3
+cat <&3
+man $1
